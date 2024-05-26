@@ -6,6 +6,8 @@ const depositRoutes = require("./routes/depositRoutes");
 const withdrawRoutes = require("./routes/withdrawRoutes");
 const shopRoutes = require("./routes/shopRoutes");
 const userRoutes = require("./routes/userRoutes");
+const gameRouter = require("./routes/gameRoutes");
+const sessionRouter = require("./routes/sessionRoutes");
 require("dotenv").config();
 
 const app = express();
@@ -17,6 +19,9 @@ app.use("/withdraw", withdrawRoutes);
 app.use("/users", userRoutes);
 app.use("/deposit", depositRoutes);
 app.use("/api/shop", shopRoutes);
+app.use("/games", gameRouter);
+app.use("/sessions", sessionRouter);
+
 sequelize
   .sync() // Add { alter: true } option here
   .then(() => {

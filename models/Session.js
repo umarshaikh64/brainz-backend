@@ -1,6 +1,5 @@
 const { DataTypes } = require("sequelize");
-const sequelize = require("../../config/database");
-const User = require("./user");
+const sequelize = require("../config/database");
 const Game = require("./Game");
 
 const Session = sequelize.define("Session", {
@@ -11,34 +10,55 @@ const Session = sequelize.define("Session", {
   },
   gameId: {
     type: DataTypes.INTEGER,
-    allowNull: false,
     references: {
-      model: "Users",
+      model: Game,
       key: "id",
     },
+    allowNull: false,
   },
-  name: {
+  title: {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  status: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  createdAt: {
+
+  startDate: {
     type: DataTypes.DATE,
     allowNull: false,
-    defaultValue: DataTypes.NOW,
   },
-  updatedAt: {
+
+  endDate: {
     type: DataTypes.DATE,
     allowNull: false,
+  },
+
+  startTime: {
+    type: DataTypes.TIME,
+    allowNull: false,
+  },
+  endTime: {
+    type: DataTypes.TIME,
+    allowNull: false,
+  },
+  description: {
+    type: DataTypes.TEXT,
+    allowNull: true,
+  },
+  createdDateTime: {
+    type: DataTypes.DATE,
     defaultValue: DataTypes.NOW,
+  },
+  updatedDateTime: {
+    type: DataTypes.DATE,
+    defaultValue: DataTypes.NOW,
+  },
+  participants: {
+    type: DataTypes.JSON,
+    defaultValue: [],
+  },
+  sessionAnswers: {
+    type: DataTypes.JSON,
+    defaultValue: [],
   },
 });
-
-// Session.hasMany(Game, { foreignKey: "sessionId" });
-// User.hasMany(Session, { foreignKey: "userId" });
-// Session.belongsTo(User, { foreignKey: "userId" });
 
 module.exports = Session;

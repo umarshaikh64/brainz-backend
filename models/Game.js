@@ -1,7 +1,5 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("../config/database");
-const Session = require("./Session");
-const User = require("./user");
 
 const Game = sequelize.define("Game", {
   id: {
@@ -14,32 +12,17 @@ const Game = sequelize.define("Game", {
     allowNull: false,
   },
   description: {
-    type: DataTypes.STRING,
-    defaultValue: "",
-  },
-  // sessionId: {
-  //   type: DataTypes.INTEGER,
-  //   allowNull: false,
-  //   references: {
-  //     model: "Sessions",
-  //     key: "id",
-  //   },
-  // },
-  // userId: {
-  //   type: DataTypes.INTEGER,
-  //   allowNull: false,
-  //   references: {
-  //     model: "Users",
-  //     key: "id",
-  //   },
-  // },
-  // score: {
-  //   type: DataTypes.INTEGER,
-  //   allowNull: false,
-  // },
-  level: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.TEXT,
     allowNull: true,
+  },
+  imageIcon: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+  status: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    defaultValue: "active",
   },
   createdAt: {
     type: DataTypes.DATE,
@@ -51,8 +34,11 @@ const Game = sequelize.define("Game", {
   },
 });
 
-User.hasMany(Game, { foreignKey: "userId" });
-Game.belongsTo(Session, { foreignKey: "sessionId" });
-Game.belongsTo(User, { foreignKey: "userId" });
+Game.associate = (models) => {
+  Game.hasMany(models.Session, {
+    foreignKey: "gameId",
+    as: "sessions",
+  });
+};
 
 module.exports = Game;
