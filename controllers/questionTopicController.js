@@ -28,54 +28,52 @@ const getQuestionTopicById = async (req, res) => {
 const createQuestionTopic = async (req, res) => {
   const { title, description } = req.body;
 
-  if (!question || !topicId || !sessionId || !answers) {
+  if (!title || !description) {
     return res.status(400).json({
-      message: "All fields are required (question, topicId, sessionId, answers).",
+      message: "All fields are required (title, description).",
     });
   }
   try {
-    const question = await Question.create({ question, topicId, sessionId, answers });
-    res.status(200).json({ message: "Question Create Success", question });
+    const questionTopic = await QuestionTopic.create({ title, description });
+    res.status(200).json({ message: "QuestionTopic Create Success", questionTopic });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 };
 
-const updateQuestion = async (req, res) => {
+const updateQuestionTopic = async (req, res) => {
   const { id } = req.params;
-  const { question, topicId, sessionId, answers } = req.body;
+  const { title, description } = req.body;
 
-  if (!question || !topicId || !sessionId || !answers) {
+  if (!title || !description) {
     return res.status(400).json({
-      message: "All fields are required (question, topicId, sessionId, answers).",
+      message: "All fields are required (title, description).",
     });
   }
   try {
-    const question = await Question.findByPk(id);
-    if (!question) {
-      return res.status(404).json({ message: "Question item not found" });
+    const questionTopic = await QuestionTopic.findByPk(id);
+    if (!questionTopic) {
+      return res.status(404).json({ message: "QuestionTopic item not found" });
     }
-    question.question = question;
-    question.topicId = topicId;
-    question.sessionId = sessionId;
-    question.answers = answers;
-    await question.save();
+    questionTopic.title = title;
+    questionTopic.description = description;
+    await questionTopic.save();
     res
       .status(200)
-      .json({ message: "Question  updated successfully", shopItem });
+      .json({ message: "Question  updated successfully", questionTopic });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 };
 
-const deleteQuestion = async (req, res) => {
+const deleteQuestionTopic = async (req, res) => {
   try {
-    const question = await Question.findByPk(req.params.id);
-    if (question) {
-      await question.destroy();
-      res.status(200).json({ message: "Question Delete Success", question });
+    const questionTopic = await QuestionTopic.findByPk(req.params.id);
+    if (questionTopic) {
+      await questionTopic.destroy();
+      res.status(200).json({ message: "QuestionTopic Delete Success", questionTopic });
     } else {
-      res.status(404).json({ message: "Question not found" });
+      res.status(404).json({ message: "QuestionTopic not found" });
     }
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -83,9 +81,9 @@ const deleteQuestion = async (req, res) => {
 };
 
 module.exports = {
-  getAllQuestion,
-  getQuestionById,
-  createQuestion,
-  updateQuestion,
-  deleteQuestion,
+  getAllQuestionTopic,
+  getQuestionTopicById,
+  createQuestionTopic,
+  updateQuestionTopic,
+  deleteQuestionTopic,
 };

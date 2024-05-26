@@ -62,7 +62,7 @@ const updateQuestion = async (req, res) => {
     await question.save();
     res
       .status(200)
-      .json({ message: "Question  updated successfully", shopItem });
+      .json({ message: "Question  updated successfully", question });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
