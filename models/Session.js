@@ -1,6 +1,6 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("../../config/database");
-const User = require("./User");
+const User = require("./user");
 const Game = require("./Game");
 
 const Session = sequelize.define("Session", {
@@ -9,13 +9,17 @@ const Session = sequelize.define("Session", {
     autoIncrement: true,
     primaryKey: true,
   },
-  userId: {
+  gameId: {
     type: DataTypes.INTEGER,
     allowNull: false,
     references: {
       model: "Users",
       key: "id",
     },
+  },
+  name: {
+    type: DataTypes.STRING,
+    allowNull: false,
   },
   status: {
     type: DataTypes.STRING,
@@ -33,8 +37,8 @@ const Session = sequelize.define("Session", {
   },
 });
 
-Session.hasMany(Game, { foreignKey: "sessionId" });
-User.hasMany(Session, { foreignKey: "userId" });
-Session.belongsTo(User, { foreignKey: "userId" });
+// Session.hasMany(Game, { foreignKey: "sessionId" });
+// User.hasMany(Session, { foreignKey: "userId" });
+// Session.belongsTo(User, { foreignKey: "userId" });
 
 module.exports = Session;

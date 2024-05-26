@@ -1,8 +1,7 @@
 const { DataTypes } = require("sequelize");
-const sequelize = require("../config/sequelize");
-
+const sequelize = require("../config/database");
 const Session = require("./Session");
-const User = require("./User");
+const User = require("./user");
 
 const Game = sequelize.define("Game", {
   id: {
@@ -10,38 +9,44 @@ const Game = sequelize.define("Game", {
     autoIncrement: true,
     primaryKey: true,
   },
-  sessionId: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
-    references: {
-      model: "Sessions",
-      key: "id",
-    },
-  },
-  userId: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
-    references: {
-      model: "Users",
-      key: "id",
-    },
-  },
-  score: {
-    type: DataTypes.INTEGER,
+  title: {
+    type: DataTypes.STRING,
     allowNull: false,
   },
+  description: {
+    type: DataTypes.STRING,
+    defaultValue: "",
+  },
+  // sessionId: {
+  //   type: DataTypes.INTEGER,
+  //   allowNull: false,
+  //   references: {
+  //     model: "Sessions",
+  //     key: "id",
+  //   },
+  // },
+  // userId: {
+  //   type: DataTypes.INTEGER,
+  //   allowNull: false,
+  //   references: {
+  //     model: "Users",
+  //     key: "id",
+  //   },
+  // },
+  // score: {
+  //   type: DataTypes.INTEGER,
+  //   allowNull: false,
+  // },
   level: {
     type: DataTypes.INTEGER,
-    allowNull: false,
+    allowNull: true,
   },
   createdAt: {
     type: DataTypes.DATE,
-    allowNull: false,
     defaultValue: DataTypes.NOW,
   },
   updatedAt: {
     type: DataTypes.DATE,
-    allowNull: false,
     defaultValue: DataTypes.NOW,
   },
 });
